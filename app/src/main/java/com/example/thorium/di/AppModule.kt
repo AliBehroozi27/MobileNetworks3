@@ -9,6 +9,7 @@ import com.example.data.repository.PreferenceRepositoryImpl
 import com.example.data.repository.TrackingRepositoryImpl
 import com.example.network.DnsMonitoringService
 import com.example.network.DnsMonitoringServiceImpl
+import com.example.network.SampleUploadService
 import com.example.thorium.dao.CellLogDao
 import com.example.thorium.dao.TrackingDao
 import com.example.thorium.database.MainDatabase
@@ -19,8 +20,8 @@ import com.example.thorium.service.cellular.CellularService
 import com.example.thorium.service.cellular.CellularServiceImpl
 import com.example.thorium.service.ping.PingService
 import com.example.thorium.service.ping.PingServiceImpl
-import com.example.thorium.service.throughput.ThroughputMonitoringService
-import com.example.thorium.service.throughput.ThroughputMonitoringServiceImpl
+import com.example.network.throughput.ThroughputMonitoringService
+import com.example.network.throughput.ThroughputMonitoringServiceImpl
 import com.example.usecase.repository.AppStateRepository
 import com.example.usecase.repository.PreferenceRepository
 import com.example.usecase.repository.TrackingRepository
@@ -30,6 +31,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -111,7 +117,22 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideThroughputMonitoringService(@ApplicationContext context: Context): ThroughputMonitoringService {
-        return ThroughputMonitoringServiceImpl(context)
+    fun provideThroughputMonitoringService(sampleUploadService: SampleUploadService): ThroughputMonitoringService {
+        return ThroughputMonitoringServiceImpl(sampleUploadService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSampleUploadService(): SampleUploadService {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        val client = OkHttpClient.Builder().addNetworkInterceptor(interceptor).build()
+
+        return Retrofit.Builder()
+            .client(client)
+            .baseUrl(SampleUploadService.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(SampleUploadService::class.java)
     }
 }
