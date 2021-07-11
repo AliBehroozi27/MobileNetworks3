@@ -20,6 +20,6 @@ class PingServiceImpl : PingService {
             return@withContext -1
         }
         val end = System.currentTimeMillis()
-        return@withContext start - end
+        return@withContext end - start
     }
 }

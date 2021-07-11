@@ -16,7 +16,8 @@ class SaveCellLogUseCase @Inject constructor(
             dateCreated = System.currentTimeMillis(),
             downstreamLinkThroughputKbps = cellLogRequest.downstreamLinkThroughputKbps,
             upstreamLinkThroughputKbps = cellLogRequest.upstreamLinkThroughputKbps,
-            dnsResolveTimeMillis = cellLogRequest.dnsResolveTimeMillis
+            dnsResolveTimeMillis = cellLogRequest.dnsResolveTimeMillis,
+            rtt = cellLogRequest.rtt
         )
         trackingRepository.addNewCellLog(cellLog)
         return cellLog

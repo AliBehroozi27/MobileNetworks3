@@ -35,5 +35,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="auto_log_timer">Auto Log Timer</string>
+    <string name="ping">Ping: %1$s ms</string>
 
 </resources>

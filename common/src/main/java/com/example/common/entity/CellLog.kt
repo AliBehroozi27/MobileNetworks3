@@ -7,6 +7,7 @@ data class CellLog(
     val upstreamLinkThroughputKbps: Int,
     val downstreamLinkThroughputKbps: Int,
     val dnsResolveTimeMillis: Long,
+    val rtt: Long,
     val dateCreated: Long
 )
 
