@@ -5,7 +5,7 @@ import com.example.common.entity.LatLngEntity
 import com.example.network.DnsMonitoringService
 import com.example.thorium.service.cellular.CellularService
 import com.example.thorium.service.ping.PingService
-import com.example.thorium.service.throughput.ThroughputMonitoringService
+import com.example.network.throughput.ThroughputMonitoringService
 import javax.inject.Inject
 
 class LogManager @Inject constructor(
@@ -18,7 +18,7 @@ class LogManager @Inject constructor(
     suspend fun getCellLog(location: LatLngEntity): CellLogRequest {
         val dnsResolveTime = dnsMonitoringService.testResolveDns()
         val downstreamThroughput = throughputMonitoringService.getEndToEndDownstreamBandwidth()
-        val upstreamThroughput = throughputMonitoringService.getLinkUpstreamBandwidthKbps()
+        val upstreamThroughput = throughputMonitoringService.getEndToEndUpstreamBandwidth()
         val activeCell = cellularService.getActiveCells()[0]
         val rtt = pingService.getRtt()
 
