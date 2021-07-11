@@ -2,9 +2,9 @@ package com.example.thorium.ui.home
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,31 +16,28 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.example.common.entity.Cell
-import com.example.common.entity.CellGsm
+import androidx.lifecycle.lifecycleScope
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.example.common.entity.CellLog
-import com.example.common.entity.CellLogRequest
-import com.example.common.entity.CellLte
-import com.example.common.entity.CellWcdma
-import com.example.common.entity.GenerationsColorsData
 import com.example.common.entity.LatLngEntity
 import com.example.common.entity.Tracking
 import com.example.thorium.R
 import com.example.thorium.databinding.FragmentHomeBinding
-import com.example.thorium.service.cellular.CellularService
-import com.example.thorium.service.cellular.CellularServiceImpl
-import com.example.thorium.service.location.LocationService
-import com.example.thorium.service.location.LocationServiceImpl
+import com.example.thorium.log.LogManager
 import com.example.thorium.service.location.RepeatingTask
-import com.example.thorium.util.ColorUtils
+import com.example.thorium.ui.detail.CellLogDetailBottomSheetDialog
+import com.example.thorium.ui.main.MainViewModel
 import com.example.thorium.util.FakeLocationProvider
 import com.example.thorium.util.checkSelfPermissionCompat
 import com.example.thorium.util.toLatLng
+import com.example.thorium.util.toLatLngEntity
 import com.example.thorium.util.toPoint
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
@@ -64,23 +61,8 @@ import com.mapbox.mapboxsdk.style.layers.PropertyFactory
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import com.mapbox.mapboxsdk.utils.BitmapUtils
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.IllegalArgumentException
-import kotlinx.android.synthetic.main.fragment_home.*
-import com.mapbox.mapboxsdk.annotations.IconFactory
-
-import androidx.core.graphics.drawable.DrawableCompat
-
-import android.graphics.drawable.Drawable
-import androidx.core.graphics.drawable.toBitmap
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
-import com.example.thorium.log.LogManager
-import com.example.thorium.ui.detail.CellLogDetailBottomSheetDialog
-import com.example.thorium.ui.main.MainViewModel
-import com.example.thorium.util.toLatLngEntity
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

@@ -85,7 +85,10 @@ class CellLogDetailBottomSheetDialog @JvmOverloads constructor(
                 R.string.downstream_throughput,
                 (cellLog.downstreamLinkThroughputKbps).toString()
             )
-
+            binding.tvPing.text = context.getString(
+                R.string.ping,
+                (cellLog.rtt).toString()
+            )
         }
     }
 

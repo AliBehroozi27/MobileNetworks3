@@ -12,7 +12,8 @@ fun CellLog.toCellLogDto(): CellLogDto {
         dateCreated = dateCreated,
         upstreamLinkThroughputKbps = upstreamLinkThroughputKbps,
         downstreamLinkThroughputKbps = downstreamLinkThroughputKbps,
-        dnsResolveTimeMillis = dnsResolveTimeMillis
+        dnsResolveTimeMillis = dnsResolveTimeMillis,
+        rtt = rtt
     )
 }
 
@@ -24,6 +25,7 @@ fun CellLogDto.toCellLog(): CellLog {
         dateCreated = dateCreated,
         upstreamLinkThroughputKbps = upstreamLinkThroughputKbps,
         downstreamLinkThroughputKbps = downstreamLinkThroughputKbps,
-        dnsResolveTimeMillis = dnsResolveTimeMillis
+        dnsResolveTimeMillis = dnsResolveTimeMillis,
+        rtt = rtt
     )
 }

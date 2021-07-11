@@ -15,5 +15,6 @@ data class CellLogDto(
     val dateCreated: Long,
     val upstreamLinkThroughputKbps: Int,
     val downstreamLinkThroughputKbps: Int,
-    val dnsResolveTimeMillis: Long
+    val dnsResolveTimeMillis: Long,
+    val rtt: Long
 )
